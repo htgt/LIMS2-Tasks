@@ -23,20 +23,20 @@ override create => sub {
 override record_key => sub {
     my ( $self, $datum ) = @_;
 
-    return $datum->{design_id} || '<undef>';
+    return $datum->{id} || '<undef>';
 };
 
 override wanted => sub {
     my ( $self, $datum ) = @_;
 
     unless ( defined $datum->{phase} ) {
-        $self->log->warn( "Skipping design $datum->{design_id} - no phase" );
+        $self->log->warn( "Skipping design $datum->{id} - no phase" );
         return 0;
     }
 
     for my $primer ( @{ $datum->{genotyping_primers} || [] } ) {
-        unless ( defined $primer->{genotyping_primer_seq} ) {
-            $self->log->warn( "Skipping design $datum->{design_id} - no seq for primer $primer->{genotyping_primer_type}" );
+        unless ( defined $primer->{seq} ) {
+            $self->log->warn( "Skipping design $datum->{id} - no seq for primer $primer->{type}" );
             return 0;
         }
     }
