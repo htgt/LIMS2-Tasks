@@ -62,7 +62,7 @@ has schema => (
 sub _build_schema {
     my $self = shift;
 
-    LIMS2::Model::DBConnect->connect( 'LIMS2_DB', 'tasks' );
+    return LIMS2::Model::DBConnect->connect( 'LIMS2_DB', 'tasks' );
 }
 
 has model => (
@@ -75,7 +75,7 @@ has model => (
 sub _build_model {
     my $self = shift;
     require LIMS2::Model;
-    LIMS2::Model->new( schema => $self->schema );
+    return LIMS2::Model->new( schema => $self->schema );
 }
 
 has ensembl_util => (
@@ -101,6 +101,7 @@ sub BUILD {
         :                  $WARN;
 
     Log::Log4perl->easy_init( { level => $log_level, layout => $self->log_layout } );
+    return;
 }
 
 override command_names => sub {

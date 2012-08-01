@@ -52,7 +52,7 @@ sub execute {
     $self->log->info( "Running " . $self->abstract );
 
     my ( $total_seen, $total_skipped, $total_err ) = (0,0,0);
-    
+
     for my $input_file ( @{$args} ) {
         my ( $file_seen, $file_skipped, $file_err ) = $self->load_data_from_file( $input_file );
         $total_seen    += $file_seen;
@@ -61,11 +61,13 @@ sub execute {
     }
 
     $self->log->info( "Processed $total_seen records (skipped $total_skipped, failed $total_err)" );
+
+    return;
 }
 
 sub load_data_from_file {
     my ( $self, $input_file ) = @_;
-    
+
     $self->log->info( "Loading data from $input_file" );
     my ($file_seen, $file_skipped, $file_err) = (0,0,0);
     my $it = iyaml( $input_file );
@@ -73,11 +75,11 @@ sub load_data_from_file {
         $file_seen++;
         if ( ! $self->wanted( $datum ) ) {
             $file_skipped++;
-            next;                        
+            next;
         }
         try {
             $self->model->txn_do(
-                sub {            
+                sub {
                     $self->create( $datum );
                     unless ( $self->commit ) {
                         $self->model->txn_rollback;

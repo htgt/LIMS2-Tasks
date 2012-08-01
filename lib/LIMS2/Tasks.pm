@@ -8,7 +8,9 @@ use namespace::autoclean;
 
 extends 'MooseX::App::Cmd';
 
-use constant plugin_search_path => [ 'LIMS2::Task::General', 'LIMS2::Task::YAMLDataLoader' ];
+sub plugin_search_path {
+    return [ 'LIMS2::Task::General', 'LIMS2::Task::YAMLDataLoader' ];
+}
 
 __PACKAGE__->meta->make_immutable;
 
