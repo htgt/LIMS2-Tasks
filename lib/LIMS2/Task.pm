@@ -1,4 +1,10 @@
 package LIMS2::Task;
+## no critic(RequireUseStrict,RequireUseWarnings)
+{
+    $LIMS2::Task::VERSION = '0.001';
+}
+## use critic
+
 
 use strict;
 use warnings FATAL => 'all';

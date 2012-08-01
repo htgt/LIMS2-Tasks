@@ -1,0 +1,35 @@
+---
+abstract: 'Script and task framework for LIMS2'
+author:
+  - 'Ray Miller <rm7@sanger.ac.uk>'
+build_requires:
+  English: 0
+  File::Find: 0
+  File::Temp: 0
+  Test::More: 0.88
+configure_requires:
+  ExtUtils::MakeMaker: 6.30
+dynamic_config: 0
+generated_by: 'Dist::Zilla version 4.300014, CPAN::Meta::Converter version 2.120921'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: LIMS2-Tasks
+requires:
+  LIMS2::Model: 0
+  LIMS2::Model::DBConnect: 0
+  LIMS2::Report: 0
+  LIMS2::Util::EnsEMBL: 0
+  LIMS2::Util::YAMLIterator: 0
+  List::MoreUtils: 0
+  Log::Log4perl: 0
+  Moose: 0
+  MooseX::App::Cmd: 0
+  MooseX::App::Cmd::Command: 0
+  MooseX::Log::Log4perl: 0
+  Try::Tiny: 0
+  namespace::autoclean: 0
+  strict: 0
+  warnings: 0
+version: 0.001
