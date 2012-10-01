@@ -18,6 +18,7 @@ override abstract => sub {
 };
 
 const my $REPORT_CACHE_CONFIG => $ENV{REPORT_CACHE_CONFIG};
+const my $MAX_PROCESSES => 2;
 
 sub execute {
     my ( $self, $opts, $args ) = @_;
@@ -28,11 +29,12 @@ sub execute {
     $self->log->info( "Loading data from $REPORT_CACHE_CONFIG" );
     my $it = iyaml( $REPORT_CACHE_CONFIG );
 
-    my $pm = new Parallel::ForkManager( 2 );
+    my $pm = new Parallel::ForkManager( $MAX_PROCESSES );
+
     $pm->run_on_start( 
         sub {
             my ($pid,$ident) = @_;
-            print "Starting report caching $ident under process id $pid\n";
+            $self->log->info("Starting report caching $ident ( process $pid )" );
         }
     );
 
@@ -40,15 +42,15 @@ sub execute {
         $pm->start( $datum->{name} ) and next; #forks child process
 
         # All work done here in child process
-
+        my $exit_code;
         try{
             $self->cache_report( $datum );
         }
         catch {
-            $self->log->error( "Error creating " . $datum->{name} . '  ' . $_ );
+            $self->log->error( "Failed to cache report $datum->{name} : " . $_ );
         };
 
-        $pm->finish; # Terminate child process
+        $pm->finish(); # Terminate child process
     }
 
     $pm->wait_all_children;
@@ -59,8 +61,6 @@ sub execute {
 
 sub cache_report {
     my ( $self, $datum ) = @_;
-    
-    $self->log->debug( "Attempting to cached report: " . $datum->{name} );
 
     my $report_id = LIMS2::Report::cached_report(
         model      => $self->model,
@@ -68,18 +68,28 @@ sub cache_report {
         params     => $datum->{report_params},
     );
 
-    my $done;
-    my $num_attempts = 10;
+    sleep 1;
+    my $done = $self->report_complete( $report_id );
+    if ( $done ) {
+        $self->log->info( 'Report already cached ' . $report_id );
+        return;
+    }
+
+    my $num_attempts = 90;
 
     while ( $num_attempts-- and not $done ) {
-        sleep 10;
+        sleep 60;
         $done = $self->report_complete( $report_id );
     }
 
-    die( "$datum->{name} report did not generate in time allocated: " . $report_id )
-        unless $done;
+    # need to delete cache entry if we die here , because process will be killed
+    unless ( $done ) {
+        $self->model->schema->resultset('CachedReport')->find( { id => $report_id } )->delete;
+        $self->log->error("Deleting cached_report entry: $report_id ");
 
-    $self->log->info( 'Cached report: ' . $datum->{name} );
+        die( "Report did not generate in time allocated: " . $report_id );
+    }
+
 
     return;
 }
