@@ -17,7 +17,7 @@ override abstract => sub {
     'Pre Cache reports for webapp';
 };
 
-const my $REPORT_CACHE_CONFIG => $ENV{REPORT_CACHE_CONFIG};
+const my $REPORT_CACHE_CONFIG => $ENV{LIMS2_REPORT_CACHE_CONFIG};
 const my $MAX_PROCESSES => 2;
 
 sub execute {
