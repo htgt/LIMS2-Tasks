@@ -93,6 +93,7 @@ sub cache_report {
     return;
 }
 
+## no critic(ControlStructures::ProhibitCascadingIfElse)
 sub report_complete {
     my ( $self, $report_id ) = @_;
 
@@ -116,6 +117,7 @@ sub report_complete {
 
     return;
 }
+## use critic
 
 __PACKAGE__->meta->make_immutable;
 
