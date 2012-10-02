@@ -27,6 +27,7 @@ my %WriteMakefileArgs = (
   "LICENSE" => "perl",
   "NAME" => "LIMS2::Tasks",
   "PREREQ_PM" => {
+    "Const::Fast" => 0,
     "LIMS2::Model" => 0,
     "LIMS2::Model::DBConnect" => 0,
     "LIMS2::Report" => 0,
@@ -38,12 +39,13 @@ my %WriteMakefileArgs = (
     "MooseX::App::Cmd" => 0,
     "MooseX::App::Cmd::Command" => 0,
     "MooseX::Log::Log4perl" => 0,
+    "Parallel::ForkManager" => 0,
     "Try::Tiny" => 0,
     "namespace::autoclean" => 0,
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.001",
+  "VERSION" => "0.002",
   "test" => {
     "TESTS" => "t/*.t"
   }

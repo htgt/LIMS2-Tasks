@@ -1,7 +1,7 @@
 package LIMS2::Task;
 ## no critic(RequireUseStrict,RequireUseWarnings)
 {
-    $LIMS2::Task::VERSION = '0.001';
+    $LIMS2::Task::VERSION = '0.002';
 }
 ## use critic
 
@@ -81,7 +81,7 @@ has model => (
 sub _build_model {
     my $self = shift;
     require LIMS2::Model;
-    return LIMS2::Model->new( schema => $self->schema );
+    return LIMS2::Model->new( schema => $self->schema, user => 'tasks' );
 }
 
 has ensembl_util => (

@@ -17,6 +17,7 @@ meta-spec:
   version: 1.4
 name: LIMS2-Tasks
 requires:
+  Const::Fast: 0
   LIMS2::Model: 0
   LIMS2::Model::DBConnect: 0
   LIMS2::Report: 0
@@ -28,8 +29,9 @@ requires:
   MooseX::App::Cmd: 0
   MooseX::App::Cmd::Command: 0
   MooseX::Log::Log4perl: 0
+  Parallel::ForkManager: 0
   Try::Tiny: 0
   namespace::autoclean: 0
   strict: 0
   warnings: 0
-version: 0.001
+version: 0.002

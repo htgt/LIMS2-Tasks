@@ -6,6 +6,7 @@ Makefile.PL
 README
 bin/lims2-task
 lib/LIMS2/Task.pm
+lib/LIMS2/Task/General/CacheReports.pm
 lib/LIMS2/Task/General/CleanReportCache.pm
 lib/LIMS2/Task/YAMLDataLoader.pm
 lib/LIMS2/Task/YAMLDataLoader/LoadBacs.pm
