@@ -29,9 +29,9 @@ sub execute {
     $self->log->info( "Loading data from $REPORT_CACHE_CONFIG" );
     my $it = iyaml( $REPORT_CACHE_CONFIG );
 
-    my $pm = new Parallel::ForkManager( $MAX_PROCESSES );
+    my $pm = Parallel::ForkManager->new( $MAX_PROCESSES );
 
-    $pm->run_on_start( 
+    $pm->run_on_start(
         sub {
             my ($pid,$ident) = @_;
             $self->log->info("Starting report caching $ident ( process $pid )" );
@@ -42,7 +42,6 @@ sub execute {
         $pm->start( $datum->{name} ) and next; #forks child process
 
         # All work done here in child process
-        my $exit_code;
         try{
             $self->cache_report( $datum );
         }
