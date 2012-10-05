@@ -1,5 +1,9 @@
 {{$NEXT}}
 
+0.003     2012-10-05 10:43:30 Europe/London
+
+    Pre-caching lims2 reports can now be done on another vm and the results copied into the t87-catalyst vm
+
 0.002     2012-10-02 08:04:55 Europe/London
 
     Add pre-caching of lims2 reports task
