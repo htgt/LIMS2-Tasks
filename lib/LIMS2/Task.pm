@@ -1,7 +1,7 @@
 package LIMS2::Task;
 ## no critic(RequireUseStrict,RequireUseWarnings)
 {
-    $LIMS2::Task::VERSION = '0.002';
+    $LIMS2::Task::VERSION = '0.003';
 }
 ## use critic
 

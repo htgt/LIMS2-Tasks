@@ -28,6 +28,7 @@ my %WriteMakefileArgs = (
   "NAME" => "LIMS2::Tasks",
   "PREREQ_PM" => {
     "Const::Fast" => 0,
+    "IPC::System::Simple" => 0,
     "LIMS2::Model" => 0,
     "LIMS2::Model::DBConnect" => 0,
     "LIMS2::Report" => 0,
@@ -45,7 +46,7 @@ my %WriteMakefileArgs = (
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.002",
+  "VERSION" => "0.003",
   "test" => {
     "TESTS" => "t/*.t"
   }
