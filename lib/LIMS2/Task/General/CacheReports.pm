@@ -1,7 +1,8 @@
 package LIMS2::Task::General::CacheReports;
 
 #
-# t87svc must run this script, this user has ssh keys setup to scp without entering password into t87-catalyst
+# script setup to run under t87svc on t87-solr vm
+# this is so scp file transfer to t87-catalyst can be completed without entering a password
 #
 
 use strict;
@@ -34,9 +35,6 @@ sub execute {
 
     die "No report cache config file specified"
         unless $LIMS2_REPORT_CACHE_CONFIG;
-
-    die "Report pre-caching script is only currently set up to run from t87-solr"
-        unless $ENV{HOSTNAME} eq 't87-solr';
 
     $self->log->info( "Loading data from $LIMS2_REPORT_CACHE_CONFIG" );
     my $it = iyaml( $LIMS2_REPORT_CACHE_CONFIG );
