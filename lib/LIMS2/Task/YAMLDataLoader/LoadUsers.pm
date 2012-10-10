@@ -1,7 +1,7 @@
 package LIMS2::Task::YAMLDataLoader::LoadUsers;
 ## no critic(RequireUseStrict,RequireUseWarnings)
 {
-    $LIMS2::Task::YAMLDataLoader::LoadUsers::VERSION = '0.003';
+    $LIMS2::Task::YAMLDataLoader::LoadUsers::VERSION = '0.004';
 }
 ## use critic
 

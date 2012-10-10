@@ -1,3 +1,7 @@
+0.004     2012-10-10 07:27:26 Europe/London
+
+    Drop checks for user and host in report pre-caching script
+
 0.003     2012-10-05 10:43:30 Europe/London
 
     Pre-caching lims2 reports can now be done on another vm and the results copied into the t87-catalyst vm
