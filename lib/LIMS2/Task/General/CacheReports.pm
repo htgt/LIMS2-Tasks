@@ -1,5 +1,9 @@
 package LIMS2::Task::General::CacheReports;
 
+#
+# t87svc must run this script, this user has ssh keys setup to scp without entering password into t87-catalyst
+#
+
 use strict;
 use warnings FATAL => 'all';
 
@@ -30,10 +34,6 @@ sub execute {
 
     die "No report cache config file specified"
         unless $LIMS2_REPORT_CACHE_CONFIG;
-
-    #t87svc user has ssh keys setup to scp without entering password into t87-catalyst
-    die "The t87svc user must run this script, not $ENV{USER}"
-        unless $ENV{USER} eq 't87svc';
 
     die "Report pre-caching script is only currently set up to run from t87-solr"
         unless $ENV{HOSTNAME} eq 't87-solr';
