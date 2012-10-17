@@ -1,5 +1,9 @@
 {{$NEXT}}
 
+0.005     2012-10-17 10:10:21 Europe/London
+
+    Make max-processes an argument to the report cache script, defaults to 2
+
 0.004     2012-10-10 07:27:26 Europe/London
 
     Drop checks for user and host in report pre-caching script
