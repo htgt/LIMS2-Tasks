@@ -1,7 +1,7 @@
 package LIMS2::Task::General::CacheReports;
 ## no critic(RequireUseStrict,RequireUseWarnings)
 {
-    $LIMS2::Task::General::CacheReports::VERSION = '0.004';
+    $LIMS2::Task::General::CacheReports::VERSION = '0.005';
 }
 ## use critic
 
@@ -25,13 +25,20 @@ use IPC::System::Simple qw( system );
 
 extends 'LIMS2::Task';
 
+has max_processes => (
+    is       => 'ro',
+    isa      => 'Int',
+    default  => 2,
+    traits   => [ 'Getopt' ],
+    cmd_flag => 'max-processes'
+);
+
 override abstract => sub {
     'Pre Cache reports for webapp';
 };
 
 const my $LIMS2_REPORT_CACHE_CONFIG => $ENV{LIMS2_REPORT_CACHE_CONFIG};
 const my $LIMS2_REPORT_DIR          => $ENV{LIMS2_REPORT_DIR};
-const my $MAX_PROCESSES             => 3;
 
 sub execute {
     my ( $self, $opts, $args ) = @_;
@@ -45,7 +52,7 @@ sub execute {
     $self->log->info( "Loading data from $LIMS2_REPORT_CACHE_CONFIG" );
     my $it = iyaml( $LIMS2_REPORT_CACHE_CONFIG );
 
-    my $pm = Parallel::ForkManager->new( $MAX_PROCESSES );
+    my $pm = Parallel::ForkManager->new( $self->max_processes );
 
     $pm->run_on_start(
         sub {
