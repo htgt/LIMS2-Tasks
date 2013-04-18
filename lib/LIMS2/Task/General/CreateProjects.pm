@@ -4,7 +4,7 @@ use warnings FATAL => 'all';
 
 =head1 NAME
 
-LIMS2::Task::General::CreateProjects - Create new LIMS2 projects 
+LIMS2::Task::General::CreateProjects - Create new LIMS2 projects
 
 =head1 DESCRIPTION
 
@@ -72,7 +72,7 @@ has sponsor => (
 );
 
 sub _check_sponsor {
-    my ( $self, $sponsor ) = @_; 
+    my ( $self, $sponsor ) = @_;
 
     unless ( exists $SPONSOR_PROFILE{ $sponsor } ) {
         die("Unknown sponsor $sponsor");
@@ -228,7 +228,7 @@ sub project_exists {
         return 1;
     }
 
-    return; 
+    return;
 }
 
 =head2 create_project
