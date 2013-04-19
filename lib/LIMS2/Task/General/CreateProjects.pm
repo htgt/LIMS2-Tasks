@@ -152,6 +152,7 @@ has mgi_accession_ids => (
     lazy_build => 1,
 );
 
+## no critic(BuiltinFunctions::ProhibitComplexMappings)
 sub _build_mgi_accession_ids {
     my $self = shift;
     my @mgi_genes;
@@ -168,6 +169,7 @@ sub _build_mgi_accession_ids {
 
     return \@mgi_genes;
 }
+## use critic
 
 sub execute {
     my ( $self, $opts, $args ) = @_;
