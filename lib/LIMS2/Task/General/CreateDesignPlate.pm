@@ -128,7 +128,7 @@ sub _build_well_data {
     $well_data{well_name}    = $data->{well_name};
     $well_data{design_id}    = $data->{design_id};
     $well_data{process_type} = 'create_di';
-    $well_data{bacs}         =  $bac_data;
+    $well_data{bacs}         =  $bac_data if $bac_data;
 
     return \%well_data;
 }
@@ -137,7 +137,12 @@ sub _build_bac_data {
     my ( $self, $design ) = @_;
     my @bac_data;
 
-    my $bacs = bacs_for_design( $self->model, $design );
+    my $bacs = try{ bacs_for_design( $self->model, $design ) };
+
+    unless( $bacs ) {
+        $self->log->warn( 'Could not find bacs for design: ' . $design->id );
+        return;
+    }
 
     my $bac_plate = 'a';
     for my $bac ( @{ $bacs } ) {
