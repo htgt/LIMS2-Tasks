@@ -86,6 +86,7 @@ sub cache_report {
         model      => $self->model,
         report     => $datum->{report_type},
         params     => $datum->{report_params},
+        force      => 1,
     );
 
     sleep 1;
