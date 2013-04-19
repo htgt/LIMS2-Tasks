@@ -1,5 +1,11 @@
 {{$NEXT}}
 
+0.006     2013-04-19 07:52:12 Europe/London
+
+    Add create design plate command.
+    Add create project command.
+    Modfiy report cache task to force caching of reports.
+
 0.005     2012-10-17 10:10:21 Europe/London
 
     Make max-processes an argument to the report cache script, defaults to 2
