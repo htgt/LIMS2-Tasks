@@ -1,7 +1,7 @@
 package LIMS2::Task::General::CacheReports;
 ## no critic(RequireUseStrict,RequireUseWarnings)
 {
-    $LIMS2::Task::General::CacheReports::VERSION = '0.005';
+    $LIMS2::Task::General::CacheReports::VERSION = '0.006';
 }
 ## use critic
 
@@ -92,6 +92,7 @@ sub cache_report {
         model      => $self->model,
         report     => $datum->{report_type},
         params     => $datum->{report_params},
+        force      => 1,
     );
 
     sleep 1;

@@ -8,6 +8,8 @@ bin/lims2-task
 lib/LIMS2/Task.pm
 lib/LIMS2/Task/General/CacheReports.pm
 lib/LIMS2/Task/General/CleanReportCache.pm
+lib/LIMS2/Task/General/CreateDesignPlate.pm
+lib/LIMS2/Task/General/CreateProjects.pm
 lib/LIMS2/Task/YAMLDataLoader.pm
 lib/LIMS2/Task/YAMLDataLoader/LoadBacs.pm
 lib/LIMS2/Task/YAMLDataLoader/LoadDesigns.pm
