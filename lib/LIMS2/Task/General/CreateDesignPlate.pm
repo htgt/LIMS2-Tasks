@@ -114,6 +114,8 @@ sub build_design_plate_data {
             wells      => \@wells,
         }
     );
+
+    return;
 }
 
 sub _build_well_data {
