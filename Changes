@@ -1,3 +1,7 @@
+0.007     2013-04-19 14:58:44 Europe/London
+
+    Design plate creation task allows creation of design wells with no bacs.
+
 0.006     2013-04-19 07:52:12 Europe/London
 
     Add create design plate command.
