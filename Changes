@@ -1,3 +1,6 @@
+0.008     2013-05-22 13:35:12 Europe/London
+    Updated create project command to add species and create Cre Knockin projects.
+
 0.007     2013-04-19 14:58:44 Europe/London
 
     Design plate creation task allows creation of design wells with no bacs.

@@ -1,7 +1,7 @@
 package LIMS2::Task::General::CreateProjects;
 ## no critic(RequireUseStrict,RequireUseWarnings)
 {
-    $LIMS2::Task::General::CreateProjects::VERSION = '0.007';
+    $LIMS2::Task::General::CreateProjects::VERSION = '0.008';
 }
 ## use critic
 
@@ -14,13 +14,15 @@ LIMS2::Task::General::CreateProjects - Create new LIMS2 projects
 
 =head1 DESCRIPTION
 
-This task creates new LIMS2 projects for a specified sponsor, from a list of MGI accession ids.
-Input file is a simple text file, with a seperate mgi accession id on each line.
+This task creates new LIMS2 projects for a specified sponsor and species, from a list of MGI accession ids.
+Input file is a simple text file, with a seperate mgi accession id on each line. The file should be for a single sponsor and species, you cannot mix types.
 
-It first checks to see if that sponsor already has a project for that gene.
+It first checks to see if that sponsor already has a project for that gene and species.
 If not a new project is created, along with the project allele information.
 
 The profile for the sponsor must be known before a new project can be created ( see the %PROFILES hash )
+
+The species for the project must be known before a new project can be created ( see the %SPECIES hash )
 
 =cut
 
@@ -41,10 +43,16 @@ override abstract => sub {
 const my $MGI_ACCESSION_ID_RX => qr/^MGI:\d+$/;
 
 const my %SPONSOR_PROFILE => (
-    Syboss        => 'homozygous',
-    Pathogens     => 'homozygous',
-    Core          => 'homozygous',
-    'Cre Knockin' => 'cre_knockin',
+    'Syboss'        => 'homozygous',
+    'Pathogens'     => 'homozygous',
+    'Core'          => 'homozygous',
+    'Cre Knockin'   => 'cre_knockin',
+#   'Cre Bac'       => 'cre_bac',
+);
+
+const my %SPECIES => (
+    'Mouse'       => 'for mouse projects',
+    'Human'       => 'for human projects',
 );
 
 const my %PROFILES => (
@@ -82,6 +90,25 @@ sub _check_sponsor {
 
     unless ( exists $SPONSOR_PROFILE{ $sponsor } ) {
         die("Unknown sponsor $sponsor");
+    }
+
+    return;
+}
+
+has species => (
+    is            => 'ro',
+    isa           => 'Str',
+    traits        => [ 'Getopt' ],
+    documentation => 'Species - Mouse or Human',
+    required      => 1,
+    trigger       => \&_check_species,
+);
+
+sub _check_species {
+    my ( $self, $species ) = @_;
+
+    unless ( exists $SPECIES{ $species } ) {
+        die("Unknown species $species");
     }
 
     return;
@@ -218,7 +245,7 @@ sub create_projects {
 
 =head2 project_exists
 
-Check a project for the given gene and sponsor does not already exist.
+Check a project for the given gene, species and sponsor does not already exist.
 
 =cut
 sub project_exists {
@@ -228,11 +255,12 @@ sub project_exists {
         {
             sponsor_id => $self->sponsor,
             gene_id    => $mgi_id,
+            species_id => $self->species,
         }
     );
 
     if ( $project ) {
-        $self->log->debug( "Already have $mgi_id project for sponsor " . $self->sponsor );
+        $self->log->debug( "Already have a project for gene $mgi_id and species " . $self->species . " for sponsor " . $self->sponsor );
         return 1;
     }
 
@@ -257,6 +285,7 @@ sub create_project {
             gene_id        => $mgi_id,
             targeting_type => $self->profile->{targeting_type},
             allele_request => $allele_request,
+            species_id     => $self->species,
         }
     );
     $self->log->debug( 'Created new project: ' . $project->id );
