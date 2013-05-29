@@ -43,6 +43,14 @@ has plate => (
     required      => 1,
 );
 
+has species => (
+    is            => 'ro',
+    isa           => 'Str',
+    required      => 1,
+    documentation => 'Species these crispr sites target, currently only Mouse or Human is valid',
+    traits        => [ 'Getopt' ],
+);
+
 has plate_data_file => (
     is            => 'ro',
     isa           => 'Path::Class::File',
@@ -108,7 +116,7 @@ sub build_design_plate_data {
     $self->design_plate_data(
         {
             name       => $self->plate,
-            species    => 'Mouse',
+            species    => $self->species,
             type       => 'DESIGN',
             created_by => $self->user,
             wells      => \@wells,
