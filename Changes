@@ -1,3 +1,8 @@
+0.009     2013-05-31 07:26:05 Europe/London
+
+    Add load crispr data task.
+    Add create crispr plate task.
+
 0.008     2013-05-22 13:35:12 Europe/London
     Updated create project command to add species and create Cre Knockin projects.
 

@@ -1,7 +1,7 @@
 package LIMS2::Task::General::CreateProjects;
 ## no critic(RequireUseStrict,RequireUseWarnings)
 {
-    $LIMS2::Task::General::CreateProjects::VERSION = '0.008';
+    $LIMS2::Task::General::CreateProjects::VERSION = '0.009';
 }
 ## use critic
 
