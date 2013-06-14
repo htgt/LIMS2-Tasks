@@ -19,20 +19,12 @@ override create => sub {
 override record_key => sub {
     my ( $self, $datum ) = @_;
 
-    return $datum->{ensembl_exon_id} || '<undef>';
+    my $gene = $datum->{gene_id} ? $datum->{gene_id} : $datum->{marker_symbol};
+    return $gene . '-' . $datum->{ensembl_gene_id} || '<undef>';
 };
 
 override wanted => sub {
     my ( $self, $datum ) = @_;
-
-    my $current_target = $self->model->schema->resultset( 'DesignTarget' )->find(
-        { ensembl_exon_id => $datum->{ensembl_exon_id} }
-    );
-
-    if ( $current_target ) {
-        $self->log->warn( 'Target already exists for exon: ' . $datum->{ensembl_exon_id} );
-        return 0;
-    }
 
     return 1;
 };
