@@ -69,6 +69,15 @@ has user => (
     required      => 1,
 );
 
+has no_bacs => (
+    is            => 'ro',
+    isa           => 'Bool',
+    traits        => ['Getopt'],
+    documentation => 'No bacs for design',
+    cmd_flag      => 'no-bacs',
+    default       => 1,
+);
+
 has design_plate_data => (
     is     => 'rw',
     isa    => 'HashRef',
@@ -130,13 +139,16 @@ sub _build_well_data {
     my ( $self, $data ) = @_;
 
     my $design = $self->model->retrieve_design( { id => $data->{design_id} } );
-    my $bac_data = $self->_build_bac_data( $design );
 
     my %well_data;
     $well_data{well_name}    = $data->{well_name};
     $well_data{design_id}    = $data->{design_id};
     $well_data{process_type} = 'create_di';
-    $well_data{bacs}         =  $bac_data if $bac_data;
+
+    unless ( $self->no_bacs ) {
+        my $bac_data = $self->_build_bac_data( $design );
+        $well_data{bacs} = $bac_data if $bac_data;
+    }
 
     return \%well_data;
 }
