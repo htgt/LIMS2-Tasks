@@ -14,6 +14,7 @@ lib/LIMS2/Task/General/CreateProjects.pm
 lib/LIMS2/Task/YAMLDataLoader.pm
 lib/LIMS2/Task/YAMLDataLoader/LoadBacs.pm
 lib/LIMS2/Task/YAMLDataLoader/LoadCrisprs.pm
+lib/LIMS2/Task/YAMLDataLoader/LoadDesignTargets.pm
 lib/LIMS2/Task/YAMLDataLoader/LoadDesigns.pm
 lib/LIMS2/Task/YAMLDataLoader/LoadUsers.pm
 lib/LIMS2/Tasks.pm

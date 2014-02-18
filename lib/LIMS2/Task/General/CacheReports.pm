@@ -1,7 +1,7 @@
 package LIMS2::Task::General::CacheReports;
 ## no critic(RequireUseStrict,RequireUseWarnings)
 {
-    $LIMS2::Task::General::CacheReports::VERSION = '0.009';
+    $LIMS2::Task::General::CacheReports::VERSION = '0.010';
 }
 ## use critic
 

@@ -1,7 +1,7 @@
 package LIMS2::Task::YAMLDataLoader::LoadDesigns;
 ## no critic(RequireUseStrict,RequireUseWarnings)
 {
-    $LIMS2::Task::YAMLDataLoader::LoadDesigns::VERSION = '0.009';
+    $LIMS2::Task::YAMLDataLoader::LoadDesigns::VERSION = '0.010';
 }
 ## use critic
 
@@ -23,7 +23,7 @@ override abstract => sub {
 override create => sub {
     my ( $self, $datum ) = @_;
 
-    $self->model->create_design( $datum );
+    $self->model->c_create_design( $datum );
 };
 
 override record_key => sub {
