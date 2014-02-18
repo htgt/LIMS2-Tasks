@@ -17,7 +17,7 @@ override abstract => sub {
 override create => sub {
     my ( $self, $datum ) = @_;
 
-    $self->model->create_design( $datum );
+    $self->model->c_create_design( $datum );
 };
 
 override record_key => sub {

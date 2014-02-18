@@ -138,7 +138,8 @@ sub build_design_plate_data {
 sub _build_well_data {
     my ( $self, $data ) = @_;
 
-    my $design = $self->model->retrieve_design( { id => $data->{design_id} } );
+    my $design = $self->model->c_retrieve_design( { id => $data->{design_id} } );
+    my $bac_data = $self->_build_bac_data( $design );
 
     my %well_data;
     $well_data{well_name}    = $data->{well_name};
