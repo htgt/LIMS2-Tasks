@@ -1,5 +1,9 @@
 {{$NEXT}}
 
+0.010     2014-02-18 11:25:20 Europe/London
+
+	Updated to use design plugin methods from WebApp-Common
+
 0.009     2013-05-31 07:26:05 Europe/London
 
     Add load crispr data task.
