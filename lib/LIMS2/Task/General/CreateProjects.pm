@@ -37,10 +37,11 @@ override abstract => sub {
 const my $MGI_ACCESSION_ID_RX => qr/^MGI:\d+$/;
 
 const my %SPONSOR_PROFILE => (
-    'Syboss'        => 'homozygous',
-    'Pathogens'     => 'homozygous',
-    'Core'          => 'homozygous',
-    'Cre Knockin'   => 'cre_knockin',
+    'Syboss'               => 'homozygous',
+    'Pathogens'            => 'homozygous',
+    'Core'                 => 'homozygous',
+    'Cre Knockin'          => 'cre_knockin',
+    'EUCOMMTools Recovery' => 'ko_first',
 #   'Cre Bac'       => 'cre_bac',
 );
 
@@ -66,6 +67,13 @@ const my %PROFILES => (
         first => {
             cassette      => 'cre_knock_in',
             mutation_type => 'cre_knock_in',
+        },
+    },
+    ko_first => {
+        targeting_type => 'single_targeted',
+        first => {
+            cassette      => 'ko_first',
+            mutation_type => 'ko_first',
         },
     },
 );
