@@ -13,7 +13,7 @@ override abstract => sub {
 override create => sub {
     my ( $self, $datum ) = @_;
 
-    $self->model->create_design_target( $datum );
+    $self->model->c_create_design_target( $datum );
 };
 
 override record_key => sub {
