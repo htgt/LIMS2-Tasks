@@ -29,11 +29,6 @@ override record_key => sub {
 override wanted => sub {
     my ( $self, $datum ) = @_;
 
-    unless ( defined $datum->{phase} ) {
-        $self->log->warn( "Skipping design $datum->{id} - no phase" );
-        return 0;
-    }
-
     for my $primer ( @{ $datum->{genotyping_primers} || [] } ) {
         unless ( defined $primer->{seq} ) {
             $self->log->warn( "Skipping design $datum->{id} - no seq for primer $primer->{type}" );
