@@ -1,7 +1,7 @@
 package LIMS2::Task::YAMLDataLoader::LoadDesigns;
 ## no critic(RequireUseStrict,RequireUseWarnings)
 {
-    $LIMS2::Task::YAMLDataLoader::LoadDesigns::VERSION = '0.010';
+    $LIMS2::Task::YAMLDataLoader::LoadDesigns::VERSION = '0.011';
 }
 ## use critic
 
@@ -34,11 +34,6 @@ override record_key => sub {
 
 override wanted => sub {
     my ( $self, $datum ) = @_;
-
-    unless ( defined $datum->{phase} ) {
-        $self->log->warn( "Skipping design $datum->{id} - no phase" );
-        return 0;
-    }
 
     for my $primer ( @{ $datum->{genotyping_primers} || [] } ) {
         unless ( defined $primer->{seq} ) {

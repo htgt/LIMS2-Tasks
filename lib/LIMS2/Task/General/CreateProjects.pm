@@ -1,7 +1,7 @@
 package LIMS2::Task::General::CreateProjects;
 ## no critic(RequireUseStrict,RequireUseWarnings)
 {
-    $LIMS2::Task::General::CreateProjects::VERSION = '0.010';
+    $LIMS2::Task::General::CreateProjects::VERSION = '0.011';
 }
 ## use critic
 
@@ -43,11 +43,13 @@ override abstract => sub {
 const my $MGI_ACCESSION_ID_RX => qr/^MGI:\d+$/;
 
 const my %SPONSOR_PROFILE => (
-    'Syboss'        => 'homozygous',
-    'Pathogens'     => 'homozygous',
-    'Core'          => 'homozygous',
-    'Cre Knockin'   => 'cre_knockin',
+    'Syboss'               => 'homozygous',
+    'Pathogens'            => 'homozygous',
+    'Core'                 => 'homozygous',
+    'Cre Knockin'          => 'cre_knockin',
+    'EUCOMMTools Recovery' => 'ko_first',
 #   'Cre Bac'       => 'cre_bac',
+    'Barry Short Arm Recovery' => 'ko_first',
 );
 
 const my %SPECIES => (
@@ -72,6 +74,13 @@ const my %PROFILES => (
         first => {
             cassette      => 'cre_knock_in',
             mutation_type => 'cre_knock_in',
+        },
+    },
+    ko_first => {
+        targeting_type => 'single_targeted',
+        first => {
+            cassette      => 'ko_first',
+            mutation_type => 'ko_first',
         },
     },
 );

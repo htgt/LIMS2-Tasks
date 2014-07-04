@@ -21,3 +21,8 @@ lib/LIMS2/Tasks.pm
 t/00-compile.t
 t/author-critic.t
 t/release-no-smart-comments.t
+tmp/barry_short_arm_project_genes.txt
+tmp/barry_short_arm_recovery_project_create.log
+tmp/eucomm_recovery_genes.txt
+tmp/missing_lims2_designs.yaml
+tmp/new_targets_wendy_gene_list_3-7-2014.yaml

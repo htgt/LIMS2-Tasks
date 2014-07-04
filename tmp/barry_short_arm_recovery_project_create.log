@@ -1,0 +1,174 @@
+2014/07/01 11:17:24 LIMS2.Task.General.CreateProjects INFO Creating projects for sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Model.DBConnect DEBUG LIMS2::Model::DBConnect::connect() - Connecting to database as role 'tasks' using settings from $ENV{LIMS2_DB} = 'LIMS2_LIVE'
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:2444343, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:2444343","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7797
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7797
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:1919862, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:1919862","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7798
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7798
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:102854, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:102854","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7799
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7799
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:109430, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:109430","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7800
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7800
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:1859396, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:1859396","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7801
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7801
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:2389572, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:2389572","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7802
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7802
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:1890648, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:1890648","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7803
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7803
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:1917848, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:1917848","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7804
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7804
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:2145895, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:2145895","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7805
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7805
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:1343094, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:1343094","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7806
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7806
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:1933382, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:1933382","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7807
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7807
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:1926488, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:1926488","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7808
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7808
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:2384589, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:2384589","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7809
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7809
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:2446120, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:2446120","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7810
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7810
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:1915481, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:1915481","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7811
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7811
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:2655768, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:2655768","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7812
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7812
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:1919304, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:1919304","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7813
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7813
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:1913975, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:1913975","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7814
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7814
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:1338888, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:1338888","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7815
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7815
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:2137383, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:2137383","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7816
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7816
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:1096881, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:1096881","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7817
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7817
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:2387176, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:2387176","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7818
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7818
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:1858223, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:1858223","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7819
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7819
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:1354756, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:1354756","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7820
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7820
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:107374, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:107374","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7821
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7821
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:94872, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:94872","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7822
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7822
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:1922947, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:1922947","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7823
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7823
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:88158, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:88158","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7824
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7824
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:1923735, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:1923735","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7825
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7825
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:2429943, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:2429943","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7826
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7826
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:88455, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:88455","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7827
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7827
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:96545, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:96545","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7828
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7828
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:3588217, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:3588217","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7829
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7829
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:1100856, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:1100856","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7830
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7830
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:98280, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:98280","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7831
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7831
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:2146818, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:2146818","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7832
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7832
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:1923759, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:1923759","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7833
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7833
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:1929612, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:1929612","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7834
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7834
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:99894, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:99894","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7835
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7835
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:1352460, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:1352460","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:27 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7836
+2014/07/01 11:17:28 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7836
+2014/07/01 11:17:28 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:1196612, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:28 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:1196612","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:28 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7837
+2014/07/01 11:17:28 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7837
+2014/07/01 11:17:28 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:1341292, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:28 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:1341292","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:28 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7838
+2014/07/01 11:17:28 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7838
+2014/07/01 11:17:28 LIMS2.Task.General.CreateProjects INFO Creating project for MGI:2147583, sponsor: Barry Short Arm Recovery
+2014/07/01 11:17:28 LIMS2.Task.General.CreateProjects DEBUG Allele request: {"gene_id":"MGI:2147583","first_allele_mutation_type":"ko_first","first_allele_cassette_function":"ko_first","targeting_type":"single_targeted"}
+2014/07/01 11:17:28 LIMS2.Task.General.CreateProjects DEBUG Created new project: 7839
+2014/07/01 11:17:28 LIMS2.Task.General.CreateProjects DEBUG Created first allele for project: 7839
