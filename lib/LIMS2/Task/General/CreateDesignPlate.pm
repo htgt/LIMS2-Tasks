@@ -75,8 +75,18 @@ has no_bacs => (
     traits        => ['Getopt'],
     documentation => 'No bacs for design',
     cmd_flag      => 'no-bacs',
-    default       => 1,
+    lazy_build    => 1,
 );
+
+sub _build_no_bacs {
+    my $self = shift;
+
+    if ( $self->species eq 'Human' ) {
+        return 1;
+    }
+
+    return 0;
+}
 
 has design_plate_data => (
     is     => 'rw',
