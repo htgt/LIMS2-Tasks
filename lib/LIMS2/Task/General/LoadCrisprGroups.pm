@@ -115,11 +115,18 @@ sub execute {
                 $count++;
             } else {
                 $self->log->debug( 'Creating crispr group for gene' . $gene_id );
-                $self->model->create_crispr_group({
-                    gene_id => $gene_id,
-                    gene_type_id => $self->gene_type,
-                    crisprs => \@crispr_group,
-                });
+                $self->model->txn_do(
+                    sub {
+                        $self->model->create_crispr_group({
+                            gene_id => $gene_id,
+                            gene_type_id => $self->gene_type,
+                            crisprs => \@crispr_group,
+                        });
+                        unless ( $self->commit ) {
+                            $self->model->txn_rollback;
+                        }
+                    }
+                );
 
                 undef @crispr_group;
                 undef $count;
