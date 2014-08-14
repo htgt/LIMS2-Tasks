@@ -8,17 +8,24 @@ LIMS2::Task::General::LoadCrisprGroups
 
 =head1 DESCRIPTION
 
-This command creates Design Plates in LIMS2.
+This command creates crispr groups in LIMS2.
 Required options:
-- plate: Name of design plate to create
 - user: Name of user creating the plate
-- design-plate-data: file containing data about the design plate wells.
+- gene_type: Gene type id, for example HGNC or MGI
+- upload_file: CSV file containing crispr group data to be uploaded
 
-The design plate data file is a csv file, with 2 columns:
-- well_name
-- design_id
+The design plate data file is a csv file, with at least a column named gene,and 2 columns
+for each crispr in the group representing the crispr_id and if its left_of_target or not.
+Column follows:
+- gene
+- crispr_1
+- left_1
+- crispr_2
+- left_2
+...
 
-The file must have these column headers.
+gene can be gene id or marker symbol.
+crispr can be lims2_crispr_id or wge_crispr_id.
 
 =cut
 
@@ -28,8 +35,6 @@ use Text::CSV;
 use LIMS2::Model;
 use MooseX::Types::Path::Class;
 use namespace::autoclean;
-
-use Smart::Comments;
 
 extends 'LIMS2::Task';
 
