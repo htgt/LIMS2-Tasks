@@ -75,10 +75,8 @@ sub execute {
         $species = 'Human';
     }
 
-    # get model and default assembly for species
-    my $model = LIMS2::Model->new( user => 'lims2');
-
-    my $assembly = $model->schema->resultset('SpeciesDefaultAssembly')->find(
+    # get default assembly for species
+    my $assembly = $self->model->schema->resultset('SpeciesDefaultAssembly')->find(
         { species_id => $species }
     )->assembly_id;
 
@@ -91,32 +89,33 @@ sub execute {
     while ( my $data = $csv->getline_hr( $fh ) ) {
 
         # get the gene_id
-        my $gene_id = $model->retrieve_gene( { species => $species, search_term => $data->{gene} } )->{gene_id};
+        my $gene_id = $self->model->retrieve_gene( { species => $species, search_term => $data->{gene} } )->{gene_id};
 
         my @crispr_group;
-        # get the crisprs
+        # get the crisprs, starting on crispr 1
         my $count = 1;
         while ( $count ) {
             if ( $data->{"crispr_$count"} ) {
                 my $crispr_id = $data->{"crispr_$count"};
                 my $crispr;
                 try {
-                    $crispr = $model->retrieve_crispr( { id => $crispr_id } )->seq // '';
+                    $crispr = $self->model->retrieve_crispr( { id => $crispr_id } )->seq // '';
                 };
-                my $left = $data->{"left_$count"};
 
                 # if the crispr can't be found, import it from wge
                 unless ($crispr) {
-                    $self->log->info( 'Importing crispr ' . $crispr_id . ' from WGE' );
-                    my @crispr_lims = $model->import_wge_crisprs( [ $crispr_id ], $species, $assembly );
+                    $self->log->debug( 'Importing crispr ' . $crispr_id . ' from WGE' );
+                    my @crispr_lims = $self->model->import_wge_crisprs( [ $crispr_id ], $species, $assembly );
                     $crispr_id = $crispr_lims[0]->{lims2_id};
                 }
                 $crispr_group[$count-1]->{crispr_id} = $crispr_id;
-                $crispr_group[$count-1]->{left_of_target} = $left;
+                $crispr_group[$count-1]->{left_of_target} = $data->{"left_$count"};
 
+                # next crispr
                 $count++;
             } else {
-                $model->create_crispr_group({
+                $self->log->debug( 'Creating crispr group for gene' . $gene_id );
+                $self->model->create_crispr_group({
                     gene_id => $gene_id,
                     gene_type_id => $self->gene_type,
                     crisprs => \@crispr_group,
