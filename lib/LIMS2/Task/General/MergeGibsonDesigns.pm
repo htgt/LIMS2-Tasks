@@ -16,6 +16,8 @@ three_arm_design
 gene_id
 marker_symbol
 
+Used for recovery of gibson designs where either the 5' or 3' arm has failed.
+
 =cut
 
 use Moose;
