@@ -75,8 +75,18 @@ has no_bacs => (
     traits        => ['Getopt'],
     documentation => 'No bacs for design',
     cmd_flag      => 'no-bacs',
-    default       => 1,
+    lazy_build    => 1,
 );
+
+sub _build_no_bacs {
+    my $self = shift;
+
+    if ( $self->species eq 'Human' ) {
+        return 1;
+    }
+
+    return 0;
+}
 
 has design_plate_data => (
     is     => 'rw',
@@ -139,7 +149,6 @@ sub _build_well_data {
     my ( $self, $data ) = @_;
 
     my $design = $self->model->c_retrieve_design( { id => $data->{design_id} } );
-    my $bac_data = $self->_build_bac_data( $design );
 
     my %well_data;
     $well_data{well_name}    = $data->{well_name};

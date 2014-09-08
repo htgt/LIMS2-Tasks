@@ -43,6 +43,7 @@ const my %SPONSOR_PROFILE => (
     'Cre Knockin'          => 'cre_knockin',
     'EUCOMMTools Recovery' => 'ko_first',
 #   'Cre Bac'       => 'cre_bac',
+    'Barry Short Arm Recovery' => 'ko_first',
 );
 
 const my %SPECIES => (
