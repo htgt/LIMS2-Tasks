@@ -47,11 +47,13 @@ my %WriteMakefileArgs = (
     "Perl6::Slurp" => 0,
     "Text::CSV" => 0,
     "Try::Tiny" => 0,
+    "autodie" => 0,
+    "feature" => 0,
     "namespace::autoclean" => 0,
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.011",
+  "VERSION" => "0.012",
   "test" => {
     "TESTS" => "t/*.t"
   }

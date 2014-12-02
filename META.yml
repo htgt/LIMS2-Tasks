@@ -37,7 +37,9 @@ requires:
   Perl6::Slurp: 0
   Text::CSV: 0
   Try::Tiny: 0
+  autodie: 0
+  feature: 0
   namespace::autoclean: 0
   strict: 0
   warnings: 0
-version: 0.011
+version: 0.012

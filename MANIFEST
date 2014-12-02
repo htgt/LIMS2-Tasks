@@ -6,11 +6,14 @@ Makefile.PL
 README
 bin/lims2-task
 lib/LIMS2/Task.pm
+lib/LIMS2/Task/General/AddBarcodesToWells.pm
 lib/LIMS2/Task/General/CacheReports.pm
 lib/LIMS2/Task/General/CleanReportCache.pm
 lib/LIMS2/Task/General/CreateCrisprPlate.pm
 lib/LIMS2/Task/General/CreateDesignPlate.pm
 lib/LIMS2/Task/General/CreateProjects.pm
+lib/LIMS2/Task/General/LoadCrisprGroups.pm
+lib/LIMS2/Task/General/MergeGibsonDesigns.pm
 lib/LIMS2/Task/YAMLDataLoader.pm
 lib/LIMS2/Task/YAMLDataLoader/LoadBacs.pm
 lib/LIMS2/Task/YAMLDataLoader/LoadCrisprs.pm
@@ -21,8 +24,3 @@ lib/LIMS2/Tasks.pm
 t/00-compile.t
 t/author-critic.t
 t/release-no-smart-comments.t
-tmp/barry_short_arm_project_genes.txt
-tmp/barry_short_arm_recovery_project_create.log
-tmp/eucomm_recovery_genes.txt
-tmp/missing_lims2_designs.yaml
-tmp/new_targets_wendy_gene_list_3-7-2014.yaml
