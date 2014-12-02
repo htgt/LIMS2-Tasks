@@ -69,8 +69,8 @@ sub execute {
 
     $self->model->txn_do(
         sub {
-            my $plate = $self->model->retrieve_plate( 
-                { name => $self->plate }, 
+            my $plate = $self->model->retrieve_plate(
+                { name => $self->plate },
                 { prefetch => { wells => 'well_barcode' } }
             );
 
