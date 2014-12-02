@@ -85,7 +85,7 @@ sub cache_report {
     my $report_id = LIMS2::Report::cached_report(
         model      => $self->model,
         report     => $datum->{report_type},
-        params     => $datum->{report_params},
+        params     => $datum->{report_params} || {},
         force      => 1,
     );
 
