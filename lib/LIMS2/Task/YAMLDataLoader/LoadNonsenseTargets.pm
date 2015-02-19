@@ -1,30 +1,32 @@
-package LIMS2::Task::YAMLDataLoader::LoadDesigns;
+package LIMS2::Task::YAMLDataLoader::LoadNonsenseTargets;
 
 use strict;
 use warnings FATAL => 'all';
 
 use Moose;
 use LIMS2::Util::WGE;
-use LIMS2::Util::YAMLIterator;
-use List::MoreUtils qw( all );
 use JSON;
+use Try::Tiny;
 use namespace::autoclean;
 
 extends 'LIMS2::Task::YAMLDataLoader';
 
-=pod
+=head1 NAME
 
-New LIMS2-Task for loading nonsense crispr & oligo data
-* Each 'experiment' will have 3 things associate with it
-    * Original crispr
-    * Nonsense oligo
-    * Nonsense crispr
-* The data must be inserted in the above order
-* The original crispr may or may not exist in LIMS2, if it does not import it from WGE
-* Insert new design 'with nonsense oligo', link it to original crispr
-    * make sure to link design to gene
-    * Add a comment on the design to indicate which exon we are targetting
-* Insert nonsense crispr, link it to the original crispr
+LIMS2::Task::YAMLDataLoader::LoadNonsenseTargets
+
+=head1 DESCRIPTION
+
+Task for loading nonsense crispr & oligo data.
+
+Each 'experiment' will have 3 things associate with it
+* Original crispr
+* Nonsense oligo
+* Nonsense crispr
+The data must be inserted in the above order
+The original crispr may or may not exist in LIMS2, if it does not import it from WGE
+Insert new design 'with nonsense oligo', link it to original crispr
+Insert nonsense crispr, link it to the original crispr
 
 =cut
 
@@ -56,6 +58,7 @@ has wge_api => (
     is      => 'ro',
     isa     => 'LIMS2::Util::WGE',
     default => sub{ LIMS2::Util::WGE->new },
+    traits        => [ 'NoGetopt' ],
 );
 
 override abstract => sub {
@@ -65,74 +68,91 @@ override abstract => sub {
 override create => sub {
     my ( $self, $datum ) = @_;
 
-    # ORIGINAL CRISPR
-    # Will have WGE ID, check if this already exists in LIMS2
+    # The original crispr will have a WGE ID, check if this already exists in LIMS2
     # If it does not then import from WGE to LIMS2
     my $orig_crispr = try{ $self->model->retrieve_crispr( { wge_crispr_id => $datum->{orig_crispr_id} } ) };
     unless ( $orig_crispr ) {
-        my ( $crispr_data ) = $self->model->import_wge_crisprs( $ids, $self->species, $self->assembly, $self->wge_api );
+        $self->log->debug( 'Crispr not present in LIMS2, importing WGE crispr into LIMS2 id : '
+                . $datum->{orig_crispr_id} );
+
+        my ($crispr_data) = $self->model->import_wge_crisprs(
+            [ $datum->{orig_crispr_id} ], $self->species, $self->assembly, $self->wge_api );
         $orig_crispr = $crispr_data->{db_crispr};
+
+        $self->log->info( 'Imported crispr from WGE: ' . $datum->{orig_crispr_id}
+                . ' to LIMS2: ' . $orig_crispr->id );
     }
 
-    # NONSENSE DESIGN
     # import the nonsense design ( one oligo )
     my $nonsense_design_data = $self->extract_nonsense_design_data( $datum, $orig_crispr );
-    $self->model->c_create_design( $nonsense_design_data );
+    my $design = $self->model->c_create_design( $nonsense_design_data );
+    $self->log->info( 'Created new nonsense design: ' . $design->id );
 
-    # NONSENSE CRISPR
     # import the nonsense crispr
     my $nonsense_crispr_data = $self->extract_nonsense_crispr_data( $datum, $orig_crispr );
-    $self->model->create_crispr( $nonsense_crispr_data );
+    my $nonsense_crispr = $self->model->create_crispr( $nonsense_crispr_data );
+    $self->log->info( 'Created new nonsense crispr ' . $nonsense_crispr->id );
 };
 
 override record_key => sub {
     my ( $self, $datum ) = @_;
 
-    return $datum->{id} || '<undef>';
+    return $datum->{gene_id} . '_' . $datum->{orig_crispr_id} || '<undef>';
 };
 
 override wanted => sub {
     my ( $self, $datum ) = @_;
 
-    # check for following things:
-    # original crispr
-    # nonsense oligo
-    # nonsense crispr
-    # nonsense crispr is same location as original crispr
+    if ( !defined $datum->{orig_crispr_id} ) {
+        $self->log->warn( "Skipping .. no original crispr id " );
+        return 0;
+    }
+    elsif ( !defined $datum->{nonsense_crispr_seq} ) {
+        $self->log->warn( "Skipping .. no sequence for nonsense crispr" );
+        return 0;
+    }
+    elsif ( !defined $datum->{oligo_seq} ) {
+        $self->log->warn( "Skipping .. no sequence for nonsense oligo" );
+        return 0;
+    }
 
     return 1;
 };
 
 =head2 extract_nonsense_design_data
 
-desc
+Create a hash of data for the nonsense design that can be passed
+to the c_create_design method in LIMS2.
 
 =cut
 sub extract_nonsense_design_data {
     my ( $self, $datum, $orig_crispr ) = @_;
 
     # if oligo strand is -ve then revcomp so it is on the +ve strand
-    # thats how we store all our sequences in LIMS2
+    # we store all our sequences in LIMS2 on the +ve strand
     my $oligo_seq = $datum->{oligo_strand} == -1 ? revcomp( $datum->{oligo_seq} ) : $datum->{oligo_seq};
 
     my $oligo_data = {
         type => 'N',
         seq  => $oligo_seq,
-        loci => {
-            chr_name   => $datum->{chromosome},
-            chr_start  => $datum->{oligo_start},
-            chr_end    => $datum->{oligo_end},
-            chr_strand => $datum->{oligo_strand},
-            species    => $self->species,
-            assembly   => $self->assembly,
-        }
+        loci => [
+            {   chr_name   => $datum->{chromosome},
+                chr_start  => $datum->{oligo_start},
+                chr_end    => $datum->{oligo_end},
+                chr_strand => $datum->{oligo_strand},
+                species    => $self->species,
+                assembly   => $self->assembly,
+            }
+        ]
     };
     my $gene_type = $self->calculate_gene_type( $datum->{gene_id} );
+    # add comment to design detailing the targeted exon and the stop codon
+    # that would be introduced
     my $design_comment = {
         category     => 'Other',
         comment_text => 'Nonsense oligo for exon: ' . $datum->{exon_id}
-            . ' which introduces stop codon: ' . $datum->{stop_codon},
-        created_by => $self->user,
+                        . ' which introduces stop codon: ' . $datum->{stop_codon},
+        created_by   => $self->user,
     };
 
     return {
@@ -140,28 +160,32 @@ sub extract_nonsense_design_data {
         type                      => 'nonsense',
         created_by                => $self->user,
         target_transcript         => $datum->{canonical_transcript},
-        oligos                    => $oligo_data,
-        comments                  => $design_comment,
-        gene_ids                  => { gene_id => $datum->{gene_id} , gene_type_id => $gene_type },
+        oligos                    => [ $oligo_data ],
+        comments                  => [ $design_comment ],
+        gene_ids                  => [ { gene_id => $datum->{gene_id} , gene_type_id => $gene_type } ],
         nonsense_design_crispr_id => $orig_crispr->id,
     };
 }
 
 =head2 extract_nonsense_crispr_data
 
-desc
+Create a hash of data for the nonsense crispr that can be passed
+to the create_crispr method in LIMS2.
 
 =cut
 sub extract_nonsense_crispr_data {
     my ( $self, $datum, $orig_crispr ) = @_;
 
-    # comment about it being a nonsense crispr
+    # add a json comment about it being a nonsense crispr
+    # along with some other useful information
     my $comment = encode_json {
         gene_id    => $datum->{gene_id},
         exon_id    => $datum->{exon_id},
         stop_codon => $datum->{stop_codon},
         vcf        => $datum->{vcf},
     };
+    # locus information for nonsense crispr is identical to
+    # that of the original crispr
     my $locus = $orig_crispr->current_locus->as_hash;
 
     return {
