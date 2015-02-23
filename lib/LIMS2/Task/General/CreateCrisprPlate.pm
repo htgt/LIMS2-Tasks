@@ -1,7 +1,7 @@
 package LIMS2::Task::General::CreateCrisprPlate;
 ## no critic(RequireUseStrict,RequireUseWarnings)
 {
-    $LIMS2::Task::General::CreateCrisprPlate::VERSION = '0.012';
+    $LIMS2::Task::General::CreateCrisprPlate::VERSION = '0.013';
 }
 ## use critic
 

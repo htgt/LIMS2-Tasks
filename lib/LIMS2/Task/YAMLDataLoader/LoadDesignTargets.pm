@@ -1,7 +1,7 @@
 package LIMS2::Task::YAMLDataLoader::LoadDesignTargets;
 ## no critic(RequireUseStrict,RequireUseWarnings)
 {
-    $LIMS2::Task::YAMLDataLoader::LoadDesignTargets::VERSION = '0.012';
+    $LIMS2::Task::YAMLDataLoader::LoadDesignTargets::VERSION = '0.013';
 }
 ## use critic
 

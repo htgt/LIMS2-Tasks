@@ -35,6 +35,7 @@ my %WriteMakefileArgs = (
     "LIMS2::Model::Util::BacsForDesign" => 0,
     "LIMS2::Report" => 0,
     "LIMS2::Util::EnsEMBL" => 0,
+    "LIMS2::Util::WGE" => 0,
     "LIMS2::Util::YAMLIterator" => 0,
     "List::MoreUtils" => 0,
     "Log::Log4perl" => 0,
@@ -53,7 +54,7 @@ my %WriteMakefileArgs = (
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.012",
+  "VERSION" => "0.013",
   "test" => {
     "TESTS" => "t/*.t"
   }
