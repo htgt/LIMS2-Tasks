@@ -17,7 +17,6 @@ Required options:
 The design plate data file is a csv file, with 2 columns:
 - well_name
 - design_id
-- A 3rd column containing cripsr_id, crispr_pair_id or crispr_group_id can be added
 
 The file must have these column headers.
 
@@ -78,9 +77,18 @@ has generate_primers => (
     is            => 'ro',
     isa           => 'Bool',
     traits        => ['Getopt'],
-    documentation => 'Generate primers for design and crisprs, pairs or groups included in plate-data-file',
+    documentation => 'Generate primers for design and any crisprs, pairs or groups linked to the designs',
     cmd_flag      => 'generate-primers',
-    lazy_build    => 1,
+    default       => 0,
+);
+
+has internal_primers => (
+    is            => 'ro',
+    isa           => 'Bool',
+    traits        => ['Getopt'],
+    documentation => 'Generate internal primers for any crisprs groups linked to the designs',
+    cmd_flag      => 'internal-primers',
+    default       => 0,
 );
 
 has no_bacs => (
@@ -109,18 +117,6 @@ has design_plate_data => (
 );
 
 has well_design_ids => (
-    is     => 'rw',
-    isa    => 'HashRef',
-    traits => [ 'NoGetopt' ],
-);
-
-has crispr_column => (
-    is     => 'rw',
-    isa    => 'Str',
-    traits => [ 'NoGetopt' ],
-);
-
-has well_crispr_ids => (
     is     => 'rw',
     isa    => 'HashRef',
     traits => [ 'NoGetopt' ],
@@ -184,12 +180,6 @@ sub build_design_plate_data {
     my $fh = $self->plate_data_file->openr or die( 'Can not open plate data file' );
     $csv->column_names( @{ $csv->getline( $fh ) } );
 
-    my ($crispr_column) = grep { $_=~/crispr/ } $csv->column_names();
-    if($crispr_column){
-        $self->crispr_column( $crispr_column );
-    }
-
-    my $well_crispr_ids = {};
     my $well_design_ids = {};
 
     while ( my $data = $csv->getline_hr( $fh ) ) {
@@ -198,10 +188,6 @@ sub build_design_plate_data {
             my $well_data = $self->_build_well_data( $data );
             $well_design_ids->{ $data->{well_name} } = $data->{design_id};
             push @wells, $well_data;
-
-            if($data->{$crispr_column}){
-                $well_crispr_ids->{ $data->{well_name} } = $data->{$crispr_column};
-            }
         }
         catch {
             $self->log->logdie('Error creating well data: ' . $_ );
@@ -210,7 +196,6 @@ sub build_design_plate_data {
 
     # Store well design and crispr IDs for primer generation
     $self->well_design_ids( $well_design_ids );
-    $self->well_crispr_ids( $well_crispr_ids );
 
     $self->design_plate_data(
         {
@@ -234,54 +219,118 @@ sub run_primer_generation {
         model               => $self->model,
         base_dir            => $self->base_dir,
         persist_primers     => $self->commit,
-        overwrite           => 0,
         run_on_farm         => 0,
     );
 
     # Set up QcPrimers util for genotyping
     my $design_primer_util = LIMS2::Util::QcPrimers->new({
         primer_project_name => 'design_genotyping',
+        overwrite           => 0,
         %common_params,
     });
 
+    # Set up QcPrimers util for crisprs
+    my $crispr_seq_primer_util = LIMS2::Util::QcPrimers->new({
+        primer_project_name => 'crispr_sequencing',
+        overwrite           => 0,
+        %common_params,
+    });
+    my @seq_primer_names = $crispr_seq_primer_util->primer_name_list;
+
+    my $crispr_internal_primer_util = LIMS2::Util::QcPrimers->new({
+        primer_project_name => 'mgp_recovery',
+        overrwite           => 0,
+        %common_params,
+    });
+    my @internal_primer_names = $crispr_internal_primer_util->primer_name_list;
+
+    # Always overwrite the PCR primers if we have generated new sequencing primers
+    my $crispr_pcr_primer_util = LIMS2::Util::QcPrimers->new({
+        primer_project_name => 'crispr_pcr',
+        overwrite            => 1,
+        %common_params,
+    });
+
+    my @design_primer_names = $design_primer_util->primer_name_list;
+$self->log->debug("primer names: ".(join ", ", @design_primer_names));
     while ( my ($well_name, $design_id) = each %{ $self->well_design_ids} ){
+        $self->log->debug("==== Generating primers for well $well_name, design $design_id ====");
+        my $design = $self->model->c_retrieve_design( { id => $design_id } );
 
-        $self->log->debug("Generating design primers for well $well_name, design $design_id");
-        # generate design primers
-        try{
-            my $design = $self->model->c_retrieve_design( { id => $design_id } );
-            my ($primer_data, $seq, $db_primers) = $design_primer_util->design_genotyping_primers( $design );
+        # generate design primers unless already exist
+        my @existing_primers = $self->_existing_primers($design, \@design_primer_names);
+        if(@existing_primers){
+            $self->log->debug("Existing ".(join ", ", @existing_primers)." primers found for design: "
+                             .$design->id.". Skipping primer generation");
         }
-        catch{
-            $self->log->warn("Primer generation failed for well $well_name, design $design_id - $_");
-        };
-    }
+        else{
+            $self->log->debug("Generating genotyping primers for design $design_id");
+            $design_primer_util->design_genotyping_primers( $design );
+        }
 
-    if($self->crispr_column){
-        # Set up QcPrimers util for crisprs
-        my $crispr_seq_primer_util = LIMS2::Util::QcPrimers->new({
-            primer_project_name => 'crispr_sequencing',
-            %common_params,
-        });
+        my @crispr_collections;
 
-        my $crispr_pcr_primer_util = LIMS2::Util::QcPrimers->new({
-            primer_project_name => 'crispr_pcr',
-            %common_params,
-        });
+        # All crisprs linked to design
+        push @crispr_collections, grep { $_ } map { $_->crispr } $design->crispr_designs;
+        # All crispr pairs linked to design
+        push @crispr_collections, grep { $_ } map { $_->crispr_pair } $design->crispr_designs;
 
-        while ( my ($well_name, $crispr_id) = each %{ $self->well_crispr_ids} ){
-            # generate crispr seq and pcr primers
-            my $crispr = $self->model->retrieve_crispr_collection({ $self->crispr_column => $crispr_id });
-            my $primer_data;
-            $self->log->debug("Generating crispr sequencing primers for well $well_name,".$self->crispr_column." $crispr_id");
-            ($primer_data) = $crispr_seq_primer_util->crispr_sequencing_primers($crispr);
+        # Decide how to handle crispr groups linked to design
+        my @crispr_groups = grep { $_ } map { $_->crispr_group } $design->crispr_designs;
+        unless( $self->internal_primers){
+            # No internal primers needed so treat crispr groups in the same way as crisprs and pairs
+            push @crispr_collections, @crispr_groups;
+            @crispr_groups = ();
+        }
+
+        foreach my $collection (@crispr_collections){
+            # skip if already has primers
+            my $collection_string = $collection->id_column_name.": ".$collection->id;
+
+            my @existing_primers = $self->_existing_primers($collection, \@seq_primer_names);
+            if(@existing_primers){
+                $self->log->debug("Existing ".(join ", ", @existing_primers)
+                                 ." primers found for $collection_string. Skipping primer generation");
+                next;
+            }
+
+            $self->log->debug("Generating crispr sequencing primers for $collection_string");
+            my ($primer_data) = $crispr_seq_primer_util->crispr_sequencing_primers($collection);
 
             if($primer_data){
-                $self->log->debug("Generating crispr PCR primers for well $well_name");
-                $crispr_pcr_primer_util->crispr_PCR_primers($primer_data, $crispr);
+                $self->log->debug("Generating crispr PCR primers for $collection_string");
+                $crispr_pcr_primer_util->crispr_PCR_primers($primer_data, $collection);
+            }
+        }
+
+        foreach my $group (@crispr_groups){
+            # skip if already has primers
+            my $collection_string = "crispr_group_id: ".$group->id;
+            my @existing_primers = $self->_existing_primers($group, \@internal_primer_names);
+            if(@existing_primers){
+                $self->log->debug("Existing ".(join ", ", @existing_primers)
+                    ." primers found for $collection_string. Skipping primer generation");
+                next;
+            }
+
+            $self->log->debug("Generating crispr group sequencing primers with internal primer for $collection_string");
+            my ($primer_data) = $crispr_internal_primer_util->crispr_group_genotyping_primers($group);
+
+            if($primer_data){
+                $self->log->debug("Generating crispr PCR primers for $collection_string");
+                $crispr_pcr_primer_util->crispr_PCR_primers($primer_data, $group);
             }
         }
     }
+}
+
+sub _existing_primers{
+    my ($self, $object, $primer_name_list) = @_;
+
+    my @existing_primers = grep { $_ } map { $object->current_primer($_) } @$primer_name_list;
+    my @existing_names = map { $_->as_hash->{primer_name} }  @existing_primers;
+
+    return @existing_names;
 }
 
 sub _build_well_data {
