@@ -20,6 +20,10 @@ The design plate data file is a csv file, with 2 columns:
 
 The file must have these column headers.
 
+Optional flags:
+- generate-primers: Generate primers for designs and all crisprs/pairs/groups linked to it
+- internal-primers: Generate internal primers for crispr groups linked to designs (use in addition to generate-primers flag)
+
 =cut
 
 use Moose;
@@ -86,7 +90,7 @@ has internal_primers => (
     is            => 'ro',
     isa           => 'Bool',
     traits        => ['Getopt'],
-    documentation => 'Generate internal primers for any crisprs groups linked to the designs',
+    documentation => 'Generate internal primers for any crispr groups linked to the designs (use with generate-primers option)',
     cmd_flag      => 'internal-primers',
     default       => 0,
 );
