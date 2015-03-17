@@ -18,6 +18,8 @@ meta-spec:
 name: LIMS2-Tasks
 requires:
   Const::Fast: 0
+  Data::Dumper: 0
+  Data::UUID: 0
   IPC::System::Simple: 0
   JSON: 0
   LIMS2::Model: 0
@@ -25,6 +27,7 @@ requires:
   LIMS2::Model::Util::BacsForDesign: 0
   LIMS2::Report: 0
   LIMS2::Util::EnsEMBL: 0
+  LIMS2::Util::QcPrimers: 0
   LIMS2::Util::WGE: 0
   LIMS2::Util::YAMLIterator: 0
   List::MoreUtils: 0
@@ -35,6 +38,7 @@ requires:
   MooseX::Log::Log4perl: 0
   MooseX::Types::Path::Class: 0
   Parallel::ForkManager: 0
+  Path::Class: 0
   Perl6::Slurp: 0
   Text::CSV: 0
   Try::Tiny: 0
@@ -43,4 +47,4 @@ requires:
   namespace::autoclean: 0
   strict: 0
   warnings: 0
-version: 0.013
+version: 0.014
