@@ -326,6 +326,8 @@ sub run_primer_generation {
             }
         }
     }
+
+    return;
 }
 
 sub _existing_primers{
