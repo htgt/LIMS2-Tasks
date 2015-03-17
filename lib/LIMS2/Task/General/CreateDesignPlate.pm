@@ -252,9 +252,9 @@ sub run_primer_generation {
     });
 
     my @design_primer_names = $design_primer_util->primer_name_list;
-$self->log->debug("primer names: ".(join ", ", @design_primer_names));
+
     while ( my ($well_name, $design_id) = each %{ $self->well_design_ids} ){
-        $self->log->debug("==== Generating primers for well $well_name, design $design_id ====");
+        $self->log->info("==== Generating primers for well $well_name, design $design_id ====");
         my $design = $self->model->c_retrieve_design( { id => $design_id } );
 
         # generate design primers unless already exist
