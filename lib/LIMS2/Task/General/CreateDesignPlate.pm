@@ -291,9 +291,9 @@ sub run_primer_generation {
             # skip if already has primers
             my $collection_string = $collection->id_column_name.": ".$collection->id;
 
-            my @existing_primers = $self->_existing_primers($collection, \@seq_primer_names);
-            if(@existing_primers){
-                $self->log->debug("Existing ".(join ", ", @existing_primers)
+            my @existing_crispr_primers = $self->_existing_primers($collection, \@seq_primer_names);
+            if(@existing_crispr_primers){
+                $self->log->debug("Existing ".(join ", ", @existing_crispr_primers)
                                  ." primers found for $collection_string. Skipping primer generation");
                 next;
             }
@@ -310,9 +310,9 @@ sub run_primer_generation {
         foreach my $group (@crispr_groups){
             # skip if already has primers
             my $collection_string = "crispr_group_id: ".$group->id;
-            my @existing_primers = $self->_existing_primers($group, \@internal_primer_names);
-            if(@existing_primers){
-                $self->log->debug("Existing ".(join ", ", @existing_primers)
+            my @existing_group_primers = $self->_existing_primers($group, \@internal_primer_names);
+            if(@existing_group_primers){
+                $self->log->debug("Existing ".(join ", ", @existing_group_primers)
                     ." primers found for $collection_string. Skipping primer generation");
                 next;
             }
