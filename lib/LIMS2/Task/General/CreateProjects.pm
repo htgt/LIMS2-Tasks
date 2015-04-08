@@ -256,14 +256,24 @@ sub project_exists {
 
     my $project = $self->schema->resultset('Project')->find(
         {
-            sponsor_id => $self->sponsor,
             gene_id    => $mgi_id,
             species_id => $self->species,
+            targeting_type => $self->profile->{targeting_type},
         }
     );
 
     if ( $project ) {
-        $self->log->debug( "Already have a project for gene $mgi_id and species " . $self->species . " for sponsor " . $self->sponsor );
+        $self->log->debug( "Already have a project for gene $mgi_id and targeting type " . $self->profile->{targeting_type} );
+        if(grep { $_ eq $self->sponsor } $project->sponsor_ids){
+            $self->log->debug( "Project already belongs to sponsor " . $self->sponsor );
+        }
+        else{
+            $self->model->add_project_sponsor({
+                project_id => $project->id,
+                sponsor_id => $self->sponsor,
+            });
+            $self->log->debug( "Added sponsor ". $self->sponsor ." to existing project");
+        }
         return 1;
     }
 
@@ -279,18 +289,17 @@ sub create_project {
     my ( $self, $mgi_id ) = @_;
     $self->log->info( "Creating project for $mgi_id, sponsor: " . $self->sponsor );
 
-    my $allele_request = $self->build_allele_request( $mgi_id );
-    $self->log->debug( "Allele request: $allele_request" );
-
     my $project = $self->schema->resultset( 'Project' )->create(
         {
-            sponsor_id     => $self->sponsor,
             gene_id        => $mgi_id,
             targeting_type => $self->profile->{targeting_type},
-            allele_request => $allele_request,
             species_id     => $self->species,
         }
     );
+    $self->model->add_project_sponsor({
+        project_id => $project->id,
+        sponsor_id => $self->sponsor,
+    });
     $self->log->debug( 'Created new project: ' . $project->id );
 
     $self->create_project_alleles( $project );
