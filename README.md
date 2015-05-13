@@ -30,8 +30,11 @@ This module is a combination on [MooseX::Getopt](https://metacpan.org/pod/MooseX
 * The name of the module will determine the command name, the framework with split capitalised words with dashes and lowercase everything:
     * e.g. LIMS2::Task::General::CleanReportCache becomes the `clean-report-cache` command.
 * Take a look at the [LIMS2::Task::General::CleanReportCache](https://github.com/htgt/LIMS2-Tasks/blob/devel/lib/LIMS2/Task/General/CleanReportCache.pm) task for a very simple command line task you could use as a template.
-* You must use the following command to start using the framework
->extends 'LIMS2::Task';
+* You must use the following command to start using the framework:
+
+ ```
+extends 'LIMS2::Task';
+```
 * You must provide a subroutine named `execute` to tell the framework what to do.
 * Its good to provide details of what the script does like this:
 
@@ -44,7 +47,6 @@ override abstract => sub {
 * Too add new command line options add a new moose attribute with the `Getopt` trait, e.g:
 
 ```
-
 has user_name => (
     is            => 'ro',
     isa           => 'Str',
