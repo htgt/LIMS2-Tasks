@@ -47,7 +47,6 @@ override abstract => sub {
 * Too add new command line options add a new moose attribute with the `Getopt` trait, e.g:
 
 ```
-
 has user_name => (
     is            => 'ro',
     isa           => 'Str',
