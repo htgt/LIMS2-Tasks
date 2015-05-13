@@ -7,29 +7,31 @@ This module is a combination on [MooseX::Getopt](https://metacpan.org/pod/MooseX
 * This new script automatically gets a number of useful command line options, helper methods and attributes.
 
 ### Default Command Line Options
-* Logging is already setup through Log::Log4perl
+* Logging is already setup through Log::Log4perl.
 * Specify log level output:
     * --trace
     * --debug
     * --verbose
-* Specify logging style with `--log-layout` option
-* Add a `--commit` option, only persist data changes if this option is set.
+* Specify logging style with `--log-layout` option.
+* Uses the `--commit` option to only persist data changes if this option is used.
 
 ### Default Attributes
 * You have access to the LIMS2 database through the `schema` attribute.
 * The LIMS2 model is available through the `model` attribute.
-* You can use out EnsEMBL util module through the `ensembl_util` attribute.
+* You can use our EnsEMBL util module through the `ensembl_util` attribute.
 
 ## Basic Usage
-* `lims2-task` command will list all the current commands available, along with short description
-* Use `lims2-task` plus the command name to see options for that command: `lims2-task create-projects`
-* By default the task will wrap any data changes in a transaction and rollback, unless the `--commit` option is set.
+* `lims2-task` command will list all the current commands available, along with a short description.
+* Use `lims2-task` plus the command name to see options for that command e.g: `lims2-task create-projects`
+* By default the task will wrap any data changes in a transaction and rollback unless the `--commit` option is set.
 
-## Creating New Task
-* Add moose module to `LIMS2::Task::General` namespace.
-* Take a look at the [LIMS2::Task::General::CleanReportCache](https://github.com/htgt/LIMS2-Tasks/blob/devel/lib/LIMS2/Task/General/CleanReportCache.pm) modules for a very simple command line task.
+## Creating A New Task
+* Add a new moose module to `LIMS2::Task::General` namespace.
+* The name of the module will determine the command name, the framework with split capitalised words with dashes and lowercase everything:
+    * e.g. LIMS2::Task::General::CleanReportCache becomes the `clean-report-cache` command.
+* Take a look at the [LIMS2::Task::General::CleanReportCache](https://github.com/htgt/LIMS2-Tasks/blob/devel/lib/LIMS2/Task/General/CleanReportCache.pm) task for a very simple command line task you could use as a template.
 * You must use the following command to start using the framework
-    extends 'LIMS2::Task';
+>extends 'LIMS2::Task';
 * You must provide a subroutine named `execute` to tell the framework what to do.
 * Its good to provide details of what the script does like this:
 
@@ -42,6 +44,7 @@ override abstract => sub {
 * Too add new command line options add a new moose attribute with the `Getopt` trait, e.g:
 
 ```
+
 has user_name => (
     is            => 'ro',
     isa           => 'Str',
@@ -58,11 +61,11 @@ has user_name => (
 * Wrap any data changes in a transaction, rollback changes unless the `commit` attribute is true.
 
 ## Creating New YAML Data Loader Task
-* A special subclass of command line scripts that loads data in a YAML format into a LIMS2 database.
-* Add moose module to `LIMS2::Task::YAMLDataLoader` namespace.
+* A special subclass of LIMS2::Task that loads data in a YAML format into a LIMS2 database.
+* Add a new moose module to `LIMS2::Task::YAMLDataLoader` namespace.
 * Input YAML file is sent in as command line argument.
 * It has 2 extra command line options available by default:
-    * `--continue-on-error` if one record fails to be created carry on trying to load the others
+    * `--continue-on-error` if one record fails to be created carry on trying to load the others ( true by default )
     * `--dump-fail-params` Dump out YAML of any records that failed to persist.
 * Look at [LIMS2::Task::YAMLDataLoader::LoadDesigns](https://github.com/htgt/LIMS2-Tasks/blob/devel/lib/LIMS2/Task/YAMLDataLoader/LoadDesigns.pm) for a example of one of these scripts.
 * You must override the `create` subroutine, this tells the script how to create the record in LIMS2.
