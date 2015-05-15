@@ -1,4 +1,10 @@
 package LIMS2::Task::General::CacheReports;
+## no critic(RequireUseStrict,RequireUseWarnings)
+{
+    $LIMS2::Task::General::CacheReports::VERSION = '0.015';
+}
+## use critic
+
 
 #
 # script setup to run under t87svc on t87-solr vm

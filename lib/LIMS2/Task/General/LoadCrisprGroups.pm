@@ -1,4 +1,10 @@
 package LIMS2::Task::General::LoadCrisprGroups;
+## no critic(RequireUseStrict,RequireUseWarnings)
+{
+    $LIMS2::Task::General::LoadCrisprGroups::VERSION = '0.015';
+}
+## use critic
+
 use strict;
 use warnings FATAL => 'all';
 

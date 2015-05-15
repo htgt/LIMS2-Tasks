@@ -1,4 +1,10 @@
 package LIMS2::Task::General::CleanReportCache;
+## no critic(RequireUseStrict,RequireUseWarnings)
+{
+    $LIMS2::Task::General::CleanReportCache::VERSION = '0.015';
+}
+## use critic
+
 
 use strict;
 use warnings FATAL => 'all';

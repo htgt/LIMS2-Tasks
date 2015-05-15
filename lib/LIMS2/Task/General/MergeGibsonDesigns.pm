@@ -1,4 +1,10 @@
 package LIMS2::Task::General::MergeGibsonDesigns;
+## no critic(RequireUseStrict,RequireUseWarnings)
+{
+    $LIMS2::Task::General::MergeGibsonDesigns::VERSION = '0.015';
+}
+## use critic
+
 
 =head1 NAME
 

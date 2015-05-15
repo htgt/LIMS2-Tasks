@@ -1,4 +1,10 @@
 package LIMS2::Task::YAMLDataLoader::LoadDesignTargets;
+## no critic(RequireUseStrict,RequireUseWarnings)
+{
+    $LIMS2::Task::YAMLDataLoader::LoadDesignTargets::VERSION = '0.015';
+}
+## use critic
+
 
 use Moose;
 use LIMS2::Util::YAMLIterator;
