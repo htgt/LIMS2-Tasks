@@ -1,5 +1,9 @@
 {{$NEXT}}
 
+0.015     2015-05-15 14:22:25 Europe/London
+
+    Added mandatory crispr appends to CRISPR plate creation
+
 0.014     2015-03-17 13:27:56 Europe/London
 
     Added primer generation during design plate creation
