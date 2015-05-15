@@ -60,6 +60,14 @@ has plate_data_file => (
     required      => 1,
 );
 
+has appends => (
+    is            => 'ro',
+    isa           => 'Str',
+    traits        => [ 'Getopt' ],
+    documentation => 'CRISPR appends type (u6, t7-barry, t7-wendy)',
+    required      => 1,
+);
+
 has user => (
     is            => 'ro',
     isa           => 'Str',
@@ -117,6 +125,7 @@ sub build_crispr_plate_data {
             name       => $self->plate,
             species    => $self->species,
             type       => 'CRISPR',
+            appends    => $self->appends,
             created_by => $self->user,
             wells      => \@wells,
         }
