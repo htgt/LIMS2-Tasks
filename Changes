@@ -1,5 +1,9 @@
 {{$NEXT}}
 
+0.016     2015-06-17 13:34:55 Europe/London
+
+    Added optional wge-crispr-ids flag to crispr plate creation
+
 0.015     2015-05-15 14:22:25 Europe/London
 
     Added mandatory crispr appends to CRISPR plate creation
