@@ -4,7 +4,9 @@ MANIFEST
 META.yml
 Makefile.PL
 README
+README.md
 bin/lims2-task
+existing_project.txt~
 lib/LIMS2/Task.pm
 lib/LIMS2/Task/General/AddBarcodesToWells.pm
 lib/LIMS2/Task/General/CacheReports.pm

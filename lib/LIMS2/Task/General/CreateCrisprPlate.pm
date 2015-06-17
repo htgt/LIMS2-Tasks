@@ -1,7 +1,7 @@
 package LIMS2::Task::General::CreateCrisprPlate;
 ## no critic(RequireUseStrict,RequireUseWarnings)
 {
-    $LIMS2::Task::General::CreateCrisprPlate::VERSION = '0.014';
+    $LIMS2::Task::General::CreateCrisprPlate::VERSION = '0.016';
 }
 ## use critic
 
@@ -66,6 +66,14 @@ has plate_data_file => (
     required      => 1,
 );
 
+has appends => (
+    is            => 'ro',
+    isa           => 'Str',
+    traits        => [ 'Getopt' ],
+    documentation => 'CRISPR appends type (u6, t7-barry, t7-wendy)',
+    required      => 1,
+);
+
 has user => (
     is            => 'ro',
     isa           => 'Str',
@@ -78,6 +86,15 @@ has crispr_plate_data => (
     is     => 'rw',
     isa    => 'HashRef',
     traits => [ 'NoGetopt' ],
+);
+
+has wge_crispr_ids => (
+    is            => 'ro',
+    isa           => 'Bool',
+    traits        => [ 'Getopt' ],
+    documentation => 'Plate data file contains WGE crispr IDs (these must have been imported into LIMS2)',
+    default       => 0,
+    cmd_flag      => 'wge-crispr-ids',
 );
 
 sub execute {
@@ -123,6 +140,7 @@ sub build_crispr_plate_data {
             name       => $self->plate,
             species    => $self->species,
             type       => 'CRISPR',
+            appends    => $self->appends,
             created_by => $self->user,
             wells      => \@wells,
         }
@@ -134,11 +152,17 @@ sub build_crispr_plate_data {
 sub _build_well_data {
     my ( $self, $data ) = @_;
 
-    my $crispr = $self->model->retrieve_crispr( { id => $data->{crispr_id} } );
+    my $crispr;
+    if($self->wge_crispr_ids){
+        $crispr = $self->model->retrieve_crispr( { wge_crispr_id => $data->{crispr_id} } );
+    }
+    else{
+        $crispr = $self->model->retrieve_crispr( { id => $data->{crispr_id} } );
+    }
 
     my %well_data;
     $well_data{well_name}    = $data->{well_name};
-    $well_data{crispr_id}    = $data->{crispr_id};
+    $well_data{crispr_id}    = $crispr->id;
     $well_data{process_type} = 'create_crispr';
 
     return \%well_data;

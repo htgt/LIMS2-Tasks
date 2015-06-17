@@ -1,7 +1,7 @@
 package LIMS2::Task::General::CreateProjects;
 ## no critic(RequireUseStrict,RequireUseWarnings)
 {
-    $LIMS2::Task::General::CreateProjects::VERSION = '0.014';
+    $LIMS2::Task::General::CreateProjects::VERSION = '0.016';
 }
 ## use critic
 
@@ -57,6 +57,10 @@ const my %SPECIES => (
     'Human'       => 'for human projects',
 );
 
+# NB: The cassette and mutation_type information now resides in the
+# targeting_profile_alleles table of LIMS2
+#
+# project_alleles are no longer needed
 const my %PROFILES => (
     homozygous => {
         targeting_type => 'double_targeted',
@@ -123,6 +127,19 @@ sub _check_species {
     return;
 }
 
+has targeting_profile_id => (
+    is         => 'ro',
+    isa        => 'Str',
+    traits     => [ 'NoGetopt' ],
+    lazy_build => 1,
+);
+
+sub _build_targeting_profile_id {
+    my $self = shift;
+
+    return $SPONSOR_PROFILE{ $self->sponsor };
+}
+
 has profile => (
     is         => 'ro',
     isa        => 'HashRef',
@@ -133,49 +150,9 @@ has profile => (
 sub _build_profile {
     my $self = shift;
 
-    my $profile_type = $SPONSOR_PROFILE{ $self->sponsor };
-
-    return $PROFILES{ $profile_type };
+    return $PROFILES{ $self->targeting_profile_id };
 }
 
-has first_allele_data => (
-    is         => 'ro',
-    isa        => 'HashRef',
-    traits     => [ 'NoGetopt' ],
-    lazy_build => 1,
-);
-
-sub _build_first_allele_data {
-    my $self = shift;
-
-    my %allele_data;
-    $allele_data{ allele_type } = 'first';
-    $allele_data{ cassette_function } = $self->profile->{first}{cassette};
-    $allele_data{ mutation_type } = $self->profile->{first}{mutation_type};
-
-    return \%allele_data;
-}
-
-has second_allele_data => (
-    is         => 'ro',
-    isa        => 'HashRef',
-    traits     => [ 'NoGetopt' ],
-    lazy_build => 1,
-);
-
-sub _build_second_allele_data {
-    my $self = shift;
-
-    $self->log->logdie( 'Do not have second allele target, for sponsor' . $self->sponsor )
-        unless exists $self->profile->{second};
-
-    my %allele_data;
-    $allele_data{ allele_type } = 'second';
-    $allele_data{ cassette_function } = $self->profile->{second}{cassette};
-    $allele_data{ mutation_type } = $self->profile->{second}{mutation_type};
-
-    return \%allele_data;
-}
 
 has project_genes_file => (
     is            => 'ro',
@@ -262,14 +239,25 @@ sub project_exists {
 
     my $project = $self->schema->resultset('Project')->find(
         {
-            sponsor_id => $self->sponsor,
             gene_id    => $mgi_id,
             species_id => $self->species,
+            targeting_type => $self->profile->{targeting_type},
+            targeting_profile_id => $self->targeting_profile_id,
         }
     );
 
     if ( $project ) {
-        $self->log->debug( "Already have a project for gene $mgi_id and species " . $self->species . " for sponsor " . $self->sponsor );
+        $self->log->debug( "Already have a project for gene $mgi_id and targeting profile " . $self->targeting_profile_id );
+        if(grep { $_ eq $self->sponsor } $project->sponsor_ids){
+            $self->log->debug( "Project already belongs to sponsor " . $self->sponsor );
+        }
+        else{
+            $self->model->add_project_sponsor({
+                project_id => $project->id,
+                sponsor_id => $self->sponsor,
+            });
+            $self->log->debug( "Added sponsor ". $self->sponsor ." to existing project");
+        }
         return 1;
     }
 
@@ -285,69 +273,23 @@ sub create_project {
     my ( $self, $mgi_id ) = @_;
     $self->log->info( "Creating project for $mgi_id, sponsor: " . $self->sponsor );
 
-    my $allele_request = $self->build_allele_request( $mgi_id );
-    $self->log->debug( "Allele request: $allele_request" );
-
     my $project = $self->schema->resultset( 'Project' )->create(
         {
-            sponsor_id     => $self->sponsor,
             gene_id        => $mgi_id,
             targeting_type => $self->profile->{targeting_type},
-            allele_request => $allele_request,
             species_id     => $self->species,
+            targeting_profile_id => $self->targeting_profile_id,
         }
     );
+    $self->model->add_project_sponsor({
+        project_id => $project->id,
+        sponsor_id => $self->sponsor,
+    });
     $self->log->debug( 'Created new project: ' . $project->id );
 
-    $self->create_project_alleles( $project );
     return;
 }
 
-=head2 build_allele_request
-
-Build the project allele_request json string.
-
-=cut
-sub build_allele_request {
-    my ( $self, $mgi_id ) = @_;
-    my %allele_request;
-
-    $allele_request{gene_id} = $mgi_id;
-    $allele_request{targeting_type} = $self->profile->{targeting_type};
-    $allele_request{first_allele_cassette_function} = $self->profile->{first}{cassette};
-    $allele_request{first_allele_mutation_type} = $self->profile->{first}{mutation_type};
-
-    # add second allele information if project is double targeted
-    if ( exists $self->profile->{second} ) {
-        $allele_request{second_allele_cassette_function} = $self->profile->{second}{cassette};
-        $allele_request{second_allele_mutation_type} = $self->profile->{second}{mutation_type};
-    }
-
-    return encode_json( \%allele_request );
-}
-
-=head2 create_project_alleles
-
-Create project_alleles for a project.
-Single targeted projects will have one first allele.
-Dounble targeted projects will have a first and second allele.
-
-=cut
-sub create_project_alleles{
-    my ( $self, $project ) = @_;
-
-    # all projects will target a first allele
-    $project->project_alleles->create( $self->first_allele_data );
-    $self->log->debug( "Created first allele for project: " . $project->id );
-
-    # create second allele if project is double targeted
-    if ( exists $self->profile->{second} ) {
-        $project->project_alleles->create( $self->second_allele_data );
-        $self->log->debug( "Created second allele for project: " . $project->id );
-    }
-
-    return;
-}
 
 __PACKAGE__->meta->make_immutable;
 

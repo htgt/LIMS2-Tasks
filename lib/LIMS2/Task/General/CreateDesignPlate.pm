@@ -1,7 +1,7 @@
 package LIMS2::Task::General::CreateDesignPlate;
 ## no critic(RequireUseStrict,RequireUseWarnings)
 {
-    $LIMS2::Task::General::CreateDesignPlate::VERSION = '0.014';
+    $LIMS2::Task::General::CreateDesignPlate::VERSION = '0.016';
 }
 ## use critic
 
