@@ -82,6 +82,15 @@ has crispr_plate_data => (
     traits => [ 'NoGetopt' ],
 );
 
+has wge_crispr_ids => (
+    is            => 'ro',
+    isa           => 'Bool',
+    traits        => [ 'Getopt' ],
+    documentation => 'Plate data file contains WGE crispr IDs (these must have been imported into LIMS2)',
+    default       => 0,
+    cmd_flag      => 'wge-crispr-ids',
+);
+
 sub execute {
     my ( $self, $opts, $args ) = @_;
     $self->log->info( 'Creating crispr plate: ' . $self->plate );
@@ -137,11 +146,17 @@ sub build_crispr_plate_data {
 sub _build_well_data {
     my ( $self, $data ) = @_;
 
-    my $crispr = $self->model->retrieve_crispr( { id => $data->{crispr_id} } );
+    my $crispr;
+    if($self->wge_crispr_ids){
+        $crispr = $self->model->retrieve_crispr( { wge_crispr_id => $data->{crispr_id} } );
+    }
+    else{
+        $crispr = $self->model->retrieve_crispr( { id => $data->{crispr_id} } );
+    }
 
     my %well_data;
     $well_data{well_name}    = $data->{well_name};
-    $well_data{crispr_id}    = $data->{crispr_id};
+    $well_data{crispr_id}    = $crispr->id;
     $well_data{process_type} = 'create_crispr';
 
     return \%well_data;
